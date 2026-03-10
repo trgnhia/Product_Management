@@ -10,4 +10,5 @@ public interface CategoryService {
     List<CategoryResponseDTO> getAllCategories();
     CategoryResponseDTO create(CategoryRequestDTO category);
     CategoryResponseDTO getCategoryById (Long id);
+    CategoryResponseDTO update (CategoryRequestDTO request, Long id);
 }

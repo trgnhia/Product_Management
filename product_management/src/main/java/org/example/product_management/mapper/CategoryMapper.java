@@ -5,6 +5,7 @@ import org.example.product_management.dto.category.CategoryRequestDTO;
 import org.example.product_management.dto.category.CategoryResponseDTO;
 import org.example.product_management.model.Category;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -12,5 +13,6 @@ import java.util.List;
 public interface CategoryMapper {
     CategoryResponseDTO toResponseDTO (Category category);
     List<CategoryResponseDTO> toListResponseDTO(List<Category> categoryList);
-    Category toEntity(CategoryRequestDTO dto);
+    Category toEntity(CategoryRequestDTO request);
+    void updateEntityFromDto (CategoryRequestDTO request, @MappingTarget Category category);
 }
