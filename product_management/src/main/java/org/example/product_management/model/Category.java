@@ -24,6 +24,6 @@ public class Category {
     @Column(name = "created_at")
     @CreationTimestamp
     private LocalDateTime createdAt;
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
     private List<Product> productList;
 }
