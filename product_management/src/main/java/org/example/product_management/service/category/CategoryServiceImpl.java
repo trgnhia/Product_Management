@@ -12,18 +12,17 @@ import org.example.product_management.repository.category.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
-    private final CategoryRepository categoryRepository;
+    private final CategoryRepository repo;
     private final CategoryMapper mapper;
 
     @Override
     @Transactional
     public List<CategoryResponseDTO> getAllCategories() {
-        List<Category> categories = categoryRepository.findAll();
+        List<Category> categories = repo.findAll();
         return mapper.toListResponseDTO(categories);
     }
 
@@ -31,14 +30,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public CategoryResponseDTO create(CategoryRequestDTO request) {
         Category category = mapper.toEntity(request);
-        categoryRepository.save(category);
+        repo.save(category);
         return mapper.toResponseDTO(category);
     }
 
     @Override
     @Transactional
     public CategoryResponseDTO getCategoryById(Long id) {
-        Category category = categoryRepository.findById(id)
+        Category category = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.CATEGORY_NOT_FOUND + id));
 
         return mapper.toResponseDTO(category);
@@ -47,10 +46,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional
     public CategoryResponseDTO update(CategoryRequestDTO request, Long id) {
-        Category category = categoryRepository.findById(id)
+        Category category = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.CATEGORY_NOT_FOUND + id));
         mapper.updateEntityFromDto(request, category);
-        categoryRepository.save(category);
+        repo.save(category);
         return mapper.toResponseDTO(category);
     }
 }
