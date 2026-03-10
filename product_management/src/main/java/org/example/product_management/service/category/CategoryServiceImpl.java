@@ -9,6 +9,7 @@ import org.example.product_management.repository.category.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,14 +19,22 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryResponseDTO> getAllCategories() {
-        List<Category> catrgories = categoryRepository.findAll();
-        return mapper.toListResponseDTO(catrgories);
+        List<Category> categories = categoryRepository.findAll();
+        return mapper.toListResponseDTO(categories);
     }
 
     @Override
-    public CategoryResponseDTO createCategory(CategoryRequestDTO categoryDto) {
-        Category category = mapper.toEntity(categoryDto);
+    public CategoryResponseDTO create(CategoryRequestDTO request) {
+        Category category = mapper.toEntity(request);
         categoryRepository.save(category);
+        return mapper.toResponseDTO(category);
+    }
+
+    @Override
+    public CategoryResponseDTO getCategoryById(Long id) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+
         return mapper.toResponseDTO(category);
     }
 }

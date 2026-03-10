@@ -21,11 +21,17 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<List<CategoryResponseDTO>> getAllCategories() {
         List<CategoryResponseDTO> categories = categoryService.getAllCategories();
-        return ResponseEntity.status(HttpStatus.OK).body(categories);
+        return ResponseEntity.ok(categories);
     }
 
     @PostMapping
-    public ResponseEntity<CategoryResponseDTO> create(@RequestBody CategoryRequestDTO dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.createCategory((dto)));
+    public ResponseEntity<CategoryResponseDTO> create(@RequestBody CategoryRequestDTO categoryRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.create((categoryRequest)));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CategoryResponseDTO> getCategoryById(@PathVariable Long id) {
+        CategoryResponseDTO category = categoryService.getCategoryById(id);
+        return ResponseEntity.ok(category);
     }
 }

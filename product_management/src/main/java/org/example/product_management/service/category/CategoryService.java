@@ -4,8 +4,10 @@ import org.example.product_management.dto.category.CategoryRequestDTO;
 import org.example.product_management.dto.category.CategoryResponseDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CategoryService {
     List<CategoryResponseDTO> getAllCategories();
-    CategoryResponseDTO createCategory(CategoryRequestDTO category);
+    CategoryResponseDTO create(CategoryRequestDTO category);
+    CategoryResponseDTO getCategoryById (Long id);
 }
