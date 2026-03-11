@@ -1,6 +1,7 @@
 package org.example.product_management.service.product;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.product_management.constant.ErrorMessages;
 import org.example.product_management.dto.page.PageResponse;
 import org.example.product_management.dto.product.ProductRequestDTO;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ProductServiceImpl implements ProductService{
     private final ProductRepository productRepo;
     private final ProductMapper mapper;
@@ -38,14 +40,31 @@ public class ProductServiceImpl implements ProductService{
         return respone;
     }
 
+//    @Override
+//    public ProductResponseDTO create(ProductRequestDTO request) {
+//        Long categoryId = request.getCategoryId();
+//        Category category = findCategoryById(categoryId);
+//        Product product = mapper.toEntity(request);
+//        product.setCategory(category);
+//        productRepo.save(product);
+//        return mapper.toResponseDTO(product);
+//    }
+
     @Override
     public ProductResponseDTO create(ProductRequestDTO request) {
+        log.info("Creating product with name={}, categoryId={}", request.getName(), request.getCategoryId());
+
         Long categoryId = request.getCategoryId();
         Category category = findCategoryById(categoryId);
+
         Product product = mapper.toEntity(request);
         product.setCategory(category);
-        productRepo.save(product);
-        return mapper.toResponseDTO(product);
+
+        Product savedProduct = productRepo.save(product);
+
+        log.info("Product created successfully with id={}", savedProduct.getId());
+
+        return mapper.toResponseDTO(savedProduct);
     }
 
 

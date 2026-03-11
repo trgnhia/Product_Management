@@ -2,6 +2,7 @@ package org.example.product_management.service.category;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.product_management.constant.ErrorMessages;
 import org.example.product_management.dto.category.CategoryRequestDTO;
 import org.example.product_management.dto.category.CategoryResponseDTO;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CategoryServiceImpl implements CategoryService {
     private final ProductRepository productRepo;
     private final CategoryRepository categoryRepo;
