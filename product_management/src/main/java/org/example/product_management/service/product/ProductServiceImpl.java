@@ -37,17 +37,25 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public ProductResponseDTO create(ProductRequestDTO request) {
-        //Category category = categoryRepo.findById(request.getCategoryId())
+        Long categoryId = request.getCategoryId();
+        Category category = categoryRepo.findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.CATEGORY_NOT_FOUND + categoryId));
         Product product = mapper.toEntity(request);
+        product.setCategory(category);
         productRepo.save(product);
         return mapper.toResponseDTO(product);
     }
 
+
     @Override
     public ProductResponseDTO update(ProductRequestDTO request, Long id) {
+        Long categoryId = request.getCategoryId();
         Product product = productRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.PRODUCT_NOT_FOUND + id));
+        Category category = categoryRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.CATEGORY_NOT_FOUND + categoryId));
         mapper.updateEntityFromDto(request, product);
+        product.setCategory(category);
         productRepo.save(product);
         return mapper.toResponseDTO(product);
     }

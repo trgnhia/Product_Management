@@ -26,4 +26,7 @@ public class ProductRequestDTO {
 
     @Size(max = 500, message = "{product.description.size}")
     private String description;
+
+    @NotNull(message = "{product.category_id.not_null}")
+    private Long categoryId;
 }
