@@ -11,19 +11,19 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductRequestDTO {
-    @NotBlank(message = "Product's name must not be blank")
-    @Size(max = 100, message = "Product's name must not exceed 100 chars")
+
+    @NotBlank(message = "{product.name.not_blank}")
+    @Size(max = 100, message = "{product.name.size}")
     private String name;
 
-    @NotNull(message = "Price must not null")
-    @Positive(message = "Product's price must be greater than 0")
+    @NotNull(message = "{product.price.not_null}")
+    @Positive(message = "{product.price.positive}")
     private BigDecimal price;
 
-    @NotNull(message = "Quantity must not null")
-    @PositiveOrZero(message = "Product's quantity must be greater than or equals 0")
+    @NotNull(message = "{product.quantity.not_null}")
+    @PositiveOrZero(message = "{product.quantity.positive_or_zero}")
     private Integer quantity;
 
-    @Size(max = 500, message = "Product's description must not exceed 500 chars")
+    @Size(max = 500, message = "{product.description.size}")
     private String description;
-
 }

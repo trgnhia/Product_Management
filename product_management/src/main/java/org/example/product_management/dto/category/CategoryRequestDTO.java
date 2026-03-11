@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryRequestDTO {
-    @NotBlank(message = "Category's name must not be blank")
-    @Size(max = 100, message = "Category's name must not exceed 100 chars")
+    @NotBlank(message = "{category.name.not_blank}")
+    @Size(max = 100, message = "{category.name.size}")
     private String name;
-    @Size(max = 500, message = "Category's description must not exceed 500 chars")
+    @Size(max = 500, message = "category.description.size")
     private String description;
 }
