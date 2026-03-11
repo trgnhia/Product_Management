@@ -32,5 +32,5 @@ public class Product {
     private LocalDateTime createdAt;
     @UpdateTimestamp
     @Column(name = "updated_at")
-    private LocalDateTime updatedAT;
+    private LocalDateTime updatedAt;
 }

@@ -20,7 +20,7 @@ public class ProductRequestDTO {
     private BigDecimal price;
 
     @NotNull(message = "Quantity must not null")
-    @PositiveOrZero(message = "Product's price must be greater than or equals 0")
+    @PositiveOrZero(message = "Product's quantity must be greater than or equals 0")
     private Integer quantity;
 
     @Size(max = 500, message = "Product's description must not exceed 500 chars")
