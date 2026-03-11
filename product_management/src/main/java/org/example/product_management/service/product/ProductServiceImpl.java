@@ -29,8 +29,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public ProductResponseDTO getProductById(Long id) {
-        Product product = productRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.PRODUCT_NOT_FOUND + id));
+        Product product = findProductById(id);
         ProductResponseDTO respone = mapper.toResponseDTO(product);
         return respone;
     }
@@ -38,8 +37,7 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public ProductResponseDTO create(ProductRequestDTO request) {
         Long categoryId = request.getCategoryId();
-        Category category = categoryRepo.findById(categoryId)
-                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.CATEGORY_NOT_FOUND + categoryId));
+        Category category = findCategoryById(categoryId);
         Product product = mapper.toEntity(request);
         product.setCategory(category);
         productRepo.save(product);
@@ -49,12 +47,9 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public ProductResponseDTO update(ProductRequestDTO request, Long id) {
+        Product product = findProductById(id);
         Long categoryId = request.getCategoryId();
-        Product product = productRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.PRODUCT_NOT_FOUND + id));
-
-        Category category = categoryRepo.findById(categoryId)
-                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.CATEGORY_NOT_FOUND + categoryId));
+        Category category = findCategoryById(categoryId);
         mapper.updateEntityFromDto(request, product);
         product.setCategory(category);
         productRepo.save(product);
@@ -67,5 +62,16 @@ public class ProductServiceImpl implements ProductService{
             throw new ResourceNotFoundException(ErrorMessages.PRODUCT_NOT_FOUND + id);
         }
         productRepo.deleteById(id);
+    }
+
+    // -------------helper----------//
+    private Category findCategoryById(Long id) {
+        return categoryRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.CATEGORY_NOT_FOUND + id));
+    }
+
+    private Product findProductById(Long id) {
+        return productRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.PRODUCT_NOT_FOUND + id));
     }
 }

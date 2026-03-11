@@ -40,17 +40,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional
     public CategoryResponseDTO getCategoryById(Long id) {
-        Category category = categoryRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.CATEGORY_NOT_FOUND + id));
-
+        Category category = findCategoryById(id);
         return mapper.toResponseDTO(category);
     }
 
     @Override
     @Transactional
     public CategoryResponseDTO update(CategoryRequestDTO request, Long id) {
-        Category category = categoryRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.CATEGORY_NOT_FOUND + id));
+        Category category = findCategoryById(id);
         mapper.updateEntityFromDto(request, category);
         categoryRepo.save(category);
         return mapper.toResponseDTO(category);
@@ -58,11 +55,16 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void delete(Long id) {
-        Category category = categoryRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.CATEGORY_NOT_FOUND + id));
+        Category category = findCategoryById(id);
         if (productRepo.existsByCategory_Id(id)) {
             throw new ResourceConflictException(ErrorMessages.CATEGORY_HAS_PRODUCTS);
         }
         categoryRepo.delete(category);
+    }
+
+    // -------------helper----------//
+    private Category findCategoryById(Long id) {
+        return categoryRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.CATEGORY_NOT_FOUND + id));
     }
 }
