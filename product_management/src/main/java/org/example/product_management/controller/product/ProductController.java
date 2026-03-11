@@ -1,5 +1,8 @@
 package org.example.product_management.controller.product;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -20,8 +23,10 @@ import java.util.List;
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
 @Validated
+@Tag(name = "Product API", description = "APTs for managing products")
 public class ProductController {
     private final ProductService service;
+
 
     @GetMapping("/all")
     public ResponseEntity<List<ProductResponseDTO>> getAllProduct() {
@@ -47,6 +52,10 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(
+            summary = "Delete product",
+            description = "Delete product by id"
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         service.delete(id);
@@ -54,16 +63,29 @@ public class ProductController {
     }
 
     @GetMapping()
-    public ResponseEntity<PageResponse<ProductResponseDTO>> getProducts(@RequestParam(defaultValue = "0") @Min(0)  int page,
-                                                                        @RequestParam(defaultValue = "5") @Min(1)  @Max(50)int size) {
+    public ResponseEntity<PageResponse<ProductResponseDTO>> getProducts(@RequestParam(defaultValue = "0") @Min(0) int page,
+                                                                        @RequestParam(defaultValue = "5") @Min(1) @Max(50) int size) {
         return ResponseEntity.ok(service.getProducts(page, size));
     }
 
+    @Operation(
+            summary = "Get sorted products",
+            description = "Retrieve products with pagination and sorting"
+    )
     @GetMapping("/sorted")
-    public ResponseEntity<PageResponse<ProductResponseDTO>> getSortedProducts (@RequestParam(defaultValue = "0") @Min(0)  int page,
-                                                                               @RequestParam(defaultValue = "5") @Min(1)  @Max(50)int size,
-                                                                               @RequestParam(defaultValue = "name")  String sortBy,
-                                                                               @RequestParam(defaultValue = "asc") String direction) {
+    public ResponseEntity<PageResponse<ProductResponseDTO>> getSortedProducts(
+            @Parameter(description = "Page number", example = "0")
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+
+            @Parameter(description = "Page size", example = "5")
+            @RequestParam(defaultValue = "5") @Min(1) @Max(50) int size,
+
+            @Parameter(description = "Field used for sorting", example = "name")
+            @RequestParam(defaultValue = "name") String sortBy,
+
+            @Parameter(description = "Sorting direction", example = "asc")
+            @RequestParam(defaultValue = "asc") String direction
+    ) {
         return ResponseEntity.ok(service.getSortingProducts(page, size, sortBy, direction));
     }
 

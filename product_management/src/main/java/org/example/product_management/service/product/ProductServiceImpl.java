@@ -105,7 +105,11 @@ public class ProductServiceImpl implements ProductService{
     }
 
 
-    // -------------helper----------//
+    /**
+     *
+     * @param id
+     * @return
+     */
     private Category findCategoryById(Long id) {
         return categoryRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.CATEGORY_NOT_FOUND + id));
