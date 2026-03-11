@@ -52,7 +52,8 @@ public class ProductServiceImpl implements ProductService{
         Long categoryId = request.getCategoryId();
         Product product = productRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.PRODUCT_NOT_FOUND + id));
-        Category category = categoryRepo.findById(id)
+
+        Category category = categoryRepo.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.CATEGORY_NOT_FOUND + categoryId));
         mapper.updateEntityFromDto(request, product);
         product.setCategory(category);

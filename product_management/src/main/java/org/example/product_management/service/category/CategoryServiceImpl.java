@@ -5,10 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.example.product_management.constant.ErrorMessages;
 import org.example.product_management.dto.category.CategoryRequestDTO;
 import org.example.product_management.dto.category.CategoryResponseDTO;
+import org.example.product_management.exception.ResourceConflictException;
 import org.example.product_management.exception.ResourceNotFoundException;
 import org.example.product_management.mapper.CategoryMapper;
 import org.example.product_management.model.Category;
 import org.example.product_management.repository.category.CategoryRepository;
+import org.example.product_management.repository.product.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,13 +18,14 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
-    private final CategoryRepository repo;
+    private final ProductRepository productRepo;
+    private final CategoryRepository categoryRepo;
     private final CategoryMapper mapper;
 
     @Override
     @Transactional
     public List<CategoryResponseDTO> getAllCategories() {
-        List<Category> categories = repo.findAll();
+        List<Category> categories = categoryRepo.findAll();
         return mapper.toListResponseDTO(categories);
     }
 
@@ -30,14 +33,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public CategoryResponseDTO create(CategoryRequestDTO request) {
         Category category = mapper.toEntity(request);
-        repo.save(category);
+        categoryRepo.save(category);
         return mapper.toResponseDTO(category);
     }
 
     @Override
     @Transactional
     public CategoryResponseDTO getCategoryById(Long id) {
-        Category category = repo.findById(id)
+        Category category = categoryRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.CATEGORY_NOT_FOUND + id));
 
         return mapper.toResponseDTO(category);
@@ -46,10 +49,20 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional
     public CategoryResponseDTO update(CategoryRequestDTO request, Long id) {
-        Category category = repo.findById(id)
+        Category category = categoryRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.CATEGORY_NOT_FOUND + id));
         mapper.updateEntityFromDto(request, category);
-        repo.save(category);
+        categoryRepo.save(category);
         return mapper.toResponseDTO(category);
+    }
+
+    @Override
+    public void delete(Long id) {
+        Category category = categoryRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.CATEGORY_NOT_FOUND + id));
+        if (productRepo.existsByCategory_Id(id)) {
+            throw new ResourceConflictException(ErrorMessages.CATEGORY_HAS_PRODUCTS);
+        }
+        categoryRepo.delete(category);
     }
 }
