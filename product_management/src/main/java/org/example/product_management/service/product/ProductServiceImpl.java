@@ -2,6 +2,7 @@ package org.example.product_management.service.product;
 
 import lombok.RequiredArgsConstructor;
 import org.example.product_management.constant.ErrorMessages;
+import org.example.product_management.dto.page.PageResponse;
 import org.example.product_management.dto.product.ProductRequestDTO;
 import org.example.product_management.dto.product.ProductResponseDTO;
 import org.example.product_management.exception.ResourceNotFoundException;
@@ -10,8 +11,11 @@ import org.example.product_management.model.Category;
 import org.example.product_management.model.Product;
 import org.example.product_management.repository.category.CategoryRepository;
 import org.example.product_management.repository.product.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -63,6 +67,43 @@ public class ProductServiceImpl implements ProductService{
         }
         productRepo.deleteById(id);
     }
+
+    @Override
+    public PageResponse<ProductResponseDTO> getProducts(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Product> productPage = productRepo.findAll(pageable);
+
+        List<ProductResponseDTO> content = mapper.toListResponseDTO(productPage.getContent());
+        PageResponse response = new PageResponse (
+                content,
+                productPage.getNumber(),
+                productPage.getSize(),
+                productPage.getTotalElements(),
+                productPage.getTotalPages(),
+                productPage.isLast()
+        );
+        return response;
+    }
+
+    @Override
+    public PageResponse<ProductResponseDTO> getSortingProducts(int page, int size, String sortBy, String direction) {
+        Sort sort = direction.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<Product> productPage = productRepo.findAll(pageable);
+        List<ProductResponseDTO> content = mapper.toListResponseDTO(productPage.getContent());
+        return new PageResponse<>(
+                content,
+                productPage.getNumber(),
+                productPage.getSize(),
+                productPage.getTotalElements(),
+                productPage.getTotalPages(),
+                productPage.isLast()
+        );
+    }
+
 
     // -------------helper----------//
     private Category findCategoryById(Long id) {
