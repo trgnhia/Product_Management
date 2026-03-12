@@ -1,5 +1,6 @@
 package org.example.product_management.exception;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
 import org.example.product_management.dto.exception.ExceptionResponse;
 import org.example.product_management.dto.exception.ValidationResponse;
@@ -14,9 +15,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
     @ExceptionHandler(value = ResourceNotFoundException.class)
     public ResponseEntity<ExceptionResponse> handleResourceNotFound(ResourceNotFoundException e) {
+        log.warn("Resource not found {}", e.getMessage());
         HttpStatus status = HttpStatus.NOT_FOUND;
         ExceptionResponse response = new ExceptionResponse(
                 e.getMessage(),
@@ -28,6 +31,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler (value = ResourceConflictException.class)
     public ResponseEntity<ExceptionResponse> handleResourceConflictException (ResourceConflictException e) {
+        log.warn("Resource conflict {}", e.getMessage());
         HttpStatus status = HttpStatus.CONFLICT;
         ExceptionResponse response = new ExceptionResponse(
                 e.getMessage(),
@@ -39,6 +43,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler (value = MethodArgumentNotValidException.class)
     public ResponseEntity<ValidationResponse> handleMethodArgumentNotValidException (MethodArgumentNotValidException e) {
+        log.warn("Validation failed {}", e.getMessage());
         HttpStatus status = HttpStatus.BAD_REQUEST;
         Map<String,String> errors = new HashMap<>();
         for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
