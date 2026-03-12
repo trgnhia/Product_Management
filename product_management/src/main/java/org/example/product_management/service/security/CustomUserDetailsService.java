@@ -1,6 +1,8 @@
 package org.example.product_management.service.security;
 
 import lombok.RequiredArgsConstructor;
+import org.example.product_management.constant.ErrorMessages;
+import org.example.product_management.exception.ResourceNotFoundException;
 import org.example.product_management.model.User;
 import org.example.product_management.repository.user.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,12 +16,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepo;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepo.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with username"));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepo.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.USER_NOT_FOUND));
 
         return org.springframework.security.core.userdetails.User
-                .withUsername(user.getUsername())
+                .withUsername(user.getEmail())
                 .password(user.getPassword())
                 .roles(user.getRole().name())
                 .build();
