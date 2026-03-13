@@ -18,7 +18,7 @@ public class JwtService {
     @Value("${app.jwt.secret}")
     private String jwtSecret;
 
-    @Value("${app.jwt.issuer:products-management}")
+    @Value("${app.jwt.issuer:-management}")
     private String jwtIssuer;
 
     private javax.crypto.SecretKey key;
@@ -37,7 +37,7 @@ public class JwtService {
 
         return Jwts.builder()
                 .setIssuer(jwtIssuer)
-                .setSubject(user.getUsername())
+                .setSubject(user.getEmail())
                 .setIssuedAt(now)
                 .setExpiration(expires)
                 .signWith(key, SignatureAlgorithm.HS256)
