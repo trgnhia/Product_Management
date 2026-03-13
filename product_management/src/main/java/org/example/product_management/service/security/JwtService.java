@@ -56,7 +56,7 @@ public class JwtService {
             return false;
         }
     }
-    public String extractUsername(String token) {
+    public String extractEmail(String token) {
         return extractClaims(token).getSubject();
     }
 
