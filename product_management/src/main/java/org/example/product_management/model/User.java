@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.product_management.enums.Role;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -24,5 +25,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
     @Column(name = "created_at")
+    @CreationTimestamp
     private LocalDateTime createdAt;
 }
