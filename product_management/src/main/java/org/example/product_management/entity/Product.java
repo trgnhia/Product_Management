@@ -1,4 +1,4 @@
-package org.example.product_management.model;
+package org.example.product_management.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

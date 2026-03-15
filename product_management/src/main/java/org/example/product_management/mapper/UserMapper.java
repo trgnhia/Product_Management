@@ -1,7 +1,7 @@
 package org.example.product_management.mapper;
 
 import org.example.product_management.dto.auth.RegisterRequest;
-import org.example.product_management.model.User;
+import org.example.product_management.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

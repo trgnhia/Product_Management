@@ -3,7 +3,7 @@ package org.example.product_management.service.security;
 import lombok.RequiredArgsConstructor;
 import org.example.product_management.constant.ErrorMessages;
 import org.example.product_management.exception.ResourceNotFoundException;
-import org.example.product_management.model.User;
+import org.example.product_management.entity.User;
 import org.example.product_management.repository.user.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

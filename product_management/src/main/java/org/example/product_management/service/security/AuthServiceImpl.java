@@ -9,7 +9,7 @@ import org.example.product_management.enums.Role;
 import org.example.product_management.exception.InvalidCredentialsException;
 import org.example.product_management.exception.ResourceConflictException;
 import org.example.product_management.mapper.UserMapper;
-import org.example.product_management.model.User;
+import org.example.product_management.entity.User;
 import org.example.product_management.repository.user.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
