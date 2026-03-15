@@ -7,6 +7,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
+import org.example.product_management.constant.SuccessMessages;
+import org.example.product_management.dto.ApiResponse;
 import org.example.product_management.dto.page.PageResponse;
 import org.example.product_management.dto.product.request.ProductRequestDTO;
 import org.example.product_management.dto.product.response.ProductResponseDTO;
@@ -18,55 +20,94 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
 @Validated
-@Tag(name = "Product API", description = "APTs for managing products")
+@Tag(name = "Product API", description = "APIs for managing products")
 public class ProductController {
+
     private final ProductService service;
 
-
     @GetMapping("/all")
-    public ResponseEntity<List<ProductResponseDTO>> getAllProduct() {
+    public ResponseEntity<ApiResponse<List<ProductResponseDTO>>> getAllProduct() {
         List<ProductResponseDTO> products = service.getAllProducts();
-        return ResponseEntity.ok(products);
+        return ResponseEntity.ok(
+                ApiResponse.<List<ProductResponseDTO>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message(SuccessMessages.PRODUCT_RETRIEVED)
+                        .data(products)
+                        .build()
+        );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<ProductResponseDTO>> getProductById(@PathVariable Long id) {
         ProductResponseDTO response = service.getProductById(id);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(
+                ApiResponse.<ProductResponseDTO>builder()
+                        .status(HttpStatus.OK.value())
+                        .message(SuccessMessages.PRODUCT_RETRIEVED)
+                        .data(response)
+                        .build()
+        );
     }
 
     @PostMapping
-    public ResponseEntity<ProductResponseDTO> create(@Valid @RequestBody ProductRequestDTO request) {
+    public ResponseEntity<ApiResponse<ProductResponseDTO>> create(@Valid @RequestBody ProductRequestDTO request) {
         ProductResponseDTO response = service.create(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.<ProductResponseDTO>builder()
+                        .status(HttpStatus.CREATED.value())
+                        .message(SuccessMessages.PRODUCT_CREATED)
+                        .data(response)
+                        .build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductResponseDTO> update(@Valid @RequestBody ProductRequestDTO request, @PathVariable Long id) {
+    public ResponseEntity<ApiResponse<ProductResponseDTO>> update(
+            @Valid @RequestBody ProductRequestDTO request,
+            @PathVariable Long id
+    ) {
         ProductResponseDTO response = service.update(request, id);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(
+                ApiResponse.<ProductResponseDTO>builder()
+                        .status(HttpStatus.OK.value())
+                        .message(SuccessMessages.PRODUCT_UPDATED)
+                        .data(response)
+                        .build()
+        );
     }
 
     @Operation(
             summary = "Delete product",
             description = "Delete product by id"
     )
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         service.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body(ApiResponse.<Void>builder()
+                        .status(HttpStatus.NO_CONTENT.value())
+                        .message(SuccessMessages.PRODUCT_DELETED)
+                        .data(null)
+                        .build());
     }
 
-    @GetMapping()
-    public ResponseEntity<PageResponse<ProductResponseDTO>> getProducts(@RequestParam(defaultValue = "0") @Min(0) int page,
-                                                                        @RequestParam(defaultValue = "5") @Min(1) @Max(50) int size) {
-        return ResponseEntity.ok(service.getProducts(page, size));
+    @GetMapping
+    public ResponseEntity<ApiResponse<PageResponse<ProductResponseDTO>>> getProducts(
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "5") @Min(1) @Max(50) int size
+    ) {
+        PageResponse<ProductResponseDTO> response = service.getProducts(page, size);
+        return ResponseEntity.ok(
+                ApiResponse.<PageResponse<ProductResponseDTO>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message(SuccessMessages.PRODUCT_RETRIEVED)
+                        .data(response)
+                        .build()
+        );
     }
 
     @Operation(
@@ -74,20 +115,19 @@ public class ProductController {
             description = "Retrieve products with pagination and sorting"
     )
     @GetMapping("/sorted")
-    public ResponseEntity<PageResponse<ProductResponseDTO>> getSortedProducts(
-            @Parameter(description = "Page number", example = "0")
+    public ResponseEntity<ApiResponse<PageResponse<ProductResponseDTO>>> getSortedProducts(
             @RequestParam(defaultValue = "0") @Min(0) int page,
-
-            @Parameter(description = "Page size", example = "5")
             @RequestParam(defaultValue = "5") @Min(1) @Max(50) int size,
-
-            @Parameter(description = "Field used for sorting", example = "name")
             @RequestParam(defaultValue = "name") String sortBy,
-
-            @Parameter(description = "Sorting direction", example = "asc")
             @RequestParam(defaultValue = "asc") String direction
     ) {
-        return ResponseEntity.ok(service.getSortingProducts(page, size, sortBy, direction));
+        PageResponse<ProductResponseDTO> response = service.getSortingProducts(page, size, sortBy, direction);
+        return ResponseEntity.ok(
+                ApiResponse.<PageResponse<ProductResponseDTO>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message(SuccessMessages.PRODUCT_RETRIEVED)
+                        .data(response)
+                        .build()
+        );
     }
-
 }
