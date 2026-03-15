@@ -1,9 +1,8 @@
 package org.example.product_management.exception;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
-import org.example.product_management.dto.exception.ExceptionResponse;
-import org.example.product_management.dto.exception.ValidationResponse;
+import org.example.product_management.dto.exception.response.ExceptionResponse;
+import org.example.product_management.dto.exception.response.ValidationResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

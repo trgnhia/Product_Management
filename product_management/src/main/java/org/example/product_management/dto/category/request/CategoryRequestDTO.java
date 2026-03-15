@@ -1,4 +1,4 @@
-package org.example.product_management.dto.category;
+package org.example.product_management.dto.category.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

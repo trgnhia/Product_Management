@@ -1,7 +1,6 @@
-package org.example.product_management.dto.auth;
+package org.example.product_management.dto.auth.request;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -2,10 +2,10 @@ package org.example.product_management.controller.auth;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.product_management.dto.auth.AuthResponse;
-import org.example.product_management.dto.auth.LoginRequest;
+import org.example.product_management.dto.auth.response.AuthResponse;
+import org.example.product_management.dto.auth.request.LoginRequest;
 import org.example.product_management.dto.auth.RegisterRequest;
-import org.example.product_management.service.security.AuthService;
+import org.example.product_management.service.security.impl.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

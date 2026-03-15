@@ -1,10 +1,9 @@
 package org.example.product_management.service.category;
 
-import org.example.product_management.dto.category.CategoryRequestDTO;
-import org.example.product_management.dto.category.CategoryResponseDTO;
+import org.example.product_management.dto.category.request.CategoryRequestDTO;
+import org.example.product_management.dto.category.response.CategoryResponseDTO;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CategoryService {
     List<CategoryResponseDTO> getAllCategories();

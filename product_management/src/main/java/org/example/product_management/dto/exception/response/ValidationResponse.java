@@ -1,4 +1,4 @@
-package org.example.product_management.dto.exception;
+package org.example.product_management.dto.exception.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

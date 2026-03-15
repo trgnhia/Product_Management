@@ -2,8 +2,8 @@ package org.example.product_management.service.security;
 
 import lombok.RequiredArgsConstructor;
 import org.example.product_management.constant.ErrorMessages;
-import org.example.product_management.dto.auth.AuthResponse;
-import org.example.product_management.dto.auth.LoginRequest;
+import org.example.product_management.dto.auth.response.AuthResponse;
+import org.example.product_management.dto.auth.request.LoginRequest;
 import org.example.product_management.dto.auth.RegisterRequest;
 import org.example.product_management.enums.Role;
 import org.example.product_management.exception.InvalidCredentialsException;
@@ -11,6 +11,7 @@ import org.example.product_management.exception.ResourceConflictException;
 import org.example.product_management.mapper.UserMapper;
 import org.example.product_management.entity.User;
 import org.example.product_management.repository.user.UserRepository;
+import org.example.product_management.service.security.impl.AuthService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +21,7 @@ import java.time.Duration;
 
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImpl implements AuthService{
+public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final UserMapper mapper;
     private final PasswordEncoder passwordEncoder;

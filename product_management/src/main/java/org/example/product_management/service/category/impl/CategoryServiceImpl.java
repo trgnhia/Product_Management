@@ -1,17 +1,18 @@
-package org.example.product_management.service.category;
+package org.example.product_management.service.category.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.product_management.constant.ErrorMessages;
-import org.example.product_management.dto.category.CategoryRequestDTO;
-import org.example.product_management.dto.category.CategoryResponseDTO;
+import org.example.product_management.dto.category.request.CategoryRequestDTO;
+import org.example.product_management.dto.category.response.CategoryResponseDTO;
 import org.example.product_management.exception.ResourceConflictException;
 import org.example.product_management.exception.ResourceNotFoundException;
 import org.example.product_management.mapper.CategoryMapper;
 import org.example.product_management.entity.Category;
 import org.example.product_management.repository.category.CategoryRepository;
 import org.example.product_management.repository.product.ProductRepository;
+import org.example.product_management.service.category.CategoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

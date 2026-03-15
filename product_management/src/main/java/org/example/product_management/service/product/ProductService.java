@@ -1,8 +1,8 @@
 package org.example.product_management.service.product;
 
 import org.example.product_management.dto.page.PageResponse;
-import org.example.product_management.dto.product.ProductRequestDTO;
-import org.example.product_management.dto.product.ProductResponseDTO;
+import org.example.product_management.dto.product.request.ProductRequestDTO;
+import org.example.product_management.dto.product.response.ProductResponseDTO;
 
 import java.util.List;
 

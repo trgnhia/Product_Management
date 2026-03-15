@@ -1,17 +1,18 @@
-package org.example.product_management.service.product;
+package org.example.product_management.service.product.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.product_management.constant.ErrorMessages;
 import org.example.product_management.dto.page.PageResponse;
-import org.example.product_management.dto.product.ProductRequestDTO;
-import org.example.product_management.dto.product.ProductResponseDTO;
+import org.example.product_management.dto.product.request.ProductRequestDTO;
+import org.example.product_management.dto.product.response.ProductResponseDTO;
 import org.example.product_management.exception.ResourceNotFoundException;
 import org.example.product_management.mapper.ProductMapper;
 import org.example.product_management.entity.Category;
 import org.example.product_management.entity.Product;
 import org.example.product_management.repository.category.CategoryRepository;
 import org.example.product_management.repository.product.ProductRepository;
+import org.example.product_management.service.product.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +23,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepo;
     private final ProductMapper mapper;
     private final CategoryRepository categoryRepo;
