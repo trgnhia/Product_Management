@@ -1,4 +1,4 @@
-package org.example.product_management.dto.auth;
+package org.example.product_management.dto.auth.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
