@@ -1,7 +1,7 @@
 package org.example.product_management.controller.product;
 
+import com.sun.net.httpserver.Authenticator;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -13,6 +13,7 @@ import org.example.product_management.dto.page.PageResponse;
 import org.example.product_management.dto.product.request.ProductRequestDTO;
 import org.example.product_management.dto.product.response.ProductResponseDTO;
 import org.example.product_management.service.product.ProductService;
+import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,6 +21,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
@@ -33,11 +35,7 @@ public class ProductController {
     public ResponseEntity<ApiResponse<List<ProductResponseDTO>>> getAllProduct() {
         List<ProductResponseDTO> products = service.getAllProducts();
         return ResponseEntity.ok(
-                ApiResponse.<List<ProductResponseDTO>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message(SuccessMessages.PRODUCT_RETRIEVED)
-                        .data(products)
-                        .build()
+                ApiResponse.success(HttpStatus.OK.value(), products, SuccessMessages.PRODUCT_RETRIEVED)
         );
     }
 
@@ -45,11 +43,7 @@ public class ProductController {
     public ResponseEntity<ApiResponse<ProductResponseDTO>> getProductById(@PathVariable Long id) {
         ProductResponseDTO response = service.getProductById(id);
         return ResponseEntity.ok(
-                ApiResponse.<ProductResponseDTO>builder()
-                        .status(HttpStatus.OK.value())
-                        .message(SuccessMessages.PRODUCT_RETRIEVED)
-                        .data(response)
-                        .build()
+                ApiResponse.success(HttpStatus.OK.value(), response, SuccessMessages.PRODUCT_RETRIEVED)
         );
     }
 
@@ -57,11 +51,7 @@ public class ProductController {
     public ResponseEntity<ApiResponse<ProductResponseDTO>> create(@Valid @RequestBody ProductRequestDTO request) {
         ProductResponseDTO response = service.create(request);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ApiResponse.<ProductResponseDTO>builder()
-                        .status(HttpStatus.CREATED.value())
-                        .message(SuccessMessages.PRODUCT_CREATED)
-                        .data(response)
-                        .build());
+                .body(ApiResponse.success(HttpStatus.CREATED.value(), response, SuccessMessages.PRODUCT_CREATED));
     }
 
     @PutMapping("/{id}")
@@ -70,13 +60,7 @@ public class ProductController {
             @PathVariable Long id
     ) {
         ProductResponseDTO response = service.update(request, id);
-        return ResponseEntity.ok(
-                ApiResponse.<ProductResponseDTO>builder()
-                        .status(HttpStatus.OK.value())
-                        .message(SuccessMessages.PRODUCT_UPDATED)
-                        .data(response)
-                        .build()
-        );
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK.value(), response, SuccessMessages.PRODUCT_UPDATED));
     }
 
     @Operation(
@@ -87,12 +71,8 @@ public class ProductController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         service.delete(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                .body(ApiResponse.<Void>builder()
-                        .status(HttpStatus.NO_CONTENT.value())
-                        .message(SuccessMessages.PRODUCT_DELETED)
-                        .data(null)
-                        .build());
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).
+                body(ApiResponse.success(HttpStatus.NO_CONTENT.value(), null, SuccessMessages.PRODUCT_DELETED));
     }
 
     @GetMapping
@@ -101,13 +81,7 @@ public class ProductController {
             @RequestParam(defaultValue = "5") @Min(1) @Max(50) int size
     ) {
         PageResponse<ProductResponseDTO> response = service.getProducts(page, size);
-        return ResponseEntity.ok(
-                ApiResponse.<PageResponse<ProductResponseDTO>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message(SuccessMessages.PRODUCT_RETRIEVED)
-                        .data(response)
-                        .build()
-        );
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK.value(), response, SuccessMessages.PRODUCT_RETRIEVED));
     }
 
     @Operation(
@@ -122,12 +96,6 @@ public class ProductController {
             @RequestParam(defaultValue = "asc") String direction
     ) {
         PageResponse<ProductResponseDTO> response = service.getSortingProducts(page, size, sortBy, direction);
-        return ResponseEntity.ok(
-                ApiResponse.<PageResponse<ProductResponseDTO>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message(SuccessMessages.PRODUCT_RETRIEVED)
-                        .data(response)
-                        .build()
-        );
+            return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK.value(), response, SuccessMessages.PRODUCT_RETRIEVED));
     }
 }
