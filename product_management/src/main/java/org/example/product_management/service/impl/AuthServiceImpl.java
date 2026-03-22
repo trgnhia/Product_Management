@@ -1,4 +1,4 @@
-package org.example.product_management.service.security;
+package org.example.product_management.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.example.product_management.constant.ErrorMessages;
@@ -11,7 +11,7 @@ import org.example.product_management.exception.ResourceConflictException;
 import org.example.product_management.mapper.UserMapper;
 import org.example.product_management.entity.User;
 import org.example.product_management.repository.user.UserRepository;
-import org.example.product_management.service.security.impl.AuthService;
+import org.example.product_management.service.interfaces.AuthService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;

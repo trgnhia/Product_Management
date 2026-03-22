@@ -1,6 +1,5 @@
 package org.example.product_management.controller.product;
 
-import com.sun.net.httpserver.Authenticator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -12,8 +11,7 @@ import org.example.product_management.dto.ApiResponse;
 import org.example.product_management.dto.page.PageResponse;
 import org.example.product_management.dto.product.request.ProductRequestDTO;
 import org.example.product_management.dto.product.response.ProductResponseDTO;
-import org.example.product_management.service.product.ProductService;
-import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
+import org.example.product_management.service.interfaces.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

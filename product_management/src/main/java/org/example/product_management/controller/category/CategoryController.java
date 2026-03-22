@@ -8,7 +8,7 @@ import org.example.product_management.constant.SuccessMessages;
 import org.example.product_management.dto.ApiResponse;
 import org.example.product_management.dto.category.request.CategoryRequestDTO;
 import org.example.product_management.dto.category.response.CategoryResponseDTO;
-import org.example.product_management.service.category.CategoryService;
+import org.example.product_management.service.interfaces.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

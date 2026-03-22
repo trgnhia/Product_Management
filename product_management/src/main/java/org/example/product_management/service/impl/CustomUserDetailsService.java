@@ -1,4 +1,4 @@
-package org.example.product_management.service.security;
+package org.example.product_management.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.example.product_management.constant.ErrorMessages;

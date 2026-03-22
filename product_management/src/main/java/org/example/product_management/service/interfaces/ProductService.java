@@ -1,4 +1,4 @@
-package org.example.product_management.service.product;
+package org.example.product_management.service.interfaces;
 
 import org.example.product_management.dto.page.PageResponse;
 import org.example.product_management.dto.product.request.ProductRequestDTO;

@@ -1,4 +1,4 @@
-package org.example.product_management.service.product.impl;
+package org.example.product_management.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,7 @@ import org.example.product_management.entity.Category;
 import org.example.product_management.entity.Product;
 import org.example.product_management.repository.category.CategoryRepository;
 import org.example.product_management.repository.product.ProductRepository;
-import org.example.product_management.service.product.ProductService;
+import org.example.product_management.service.interfaces.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

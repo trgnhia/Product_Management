@@ -1,4 +1,4 @@
-package org.example.product_management.service.security;
+package org.example.product_management.service.impl;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

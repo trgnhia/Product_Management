@@ -1,4 +1,4 @@
-package org.example.product_management.service.category;
+package org.example.product_management.service.interfaces;
 
 import org.example.product_management.dto.category.request.CategoryRequestDTO;
 import org.example.product_management.dto.category.response.CategoryResponseDTO;

@@ -1,4 +1,4 @@
-package org.example.product_management.service.security.impl;
+package org.example.product_management.service.interfaces;
 
 import org.example.product_management.dto.auth.request.RegisterRequest;
 import org.example.product_management.dto.auth.response.AuthResponse;

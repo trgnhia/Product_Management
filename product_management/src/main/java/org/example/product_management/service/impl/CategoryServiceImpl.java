@@ -1,4 +1,4 @@
-package org.example.product_management.service.category.impl;
+package org.example.product_management.service.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import org.example.product_management.mapper.CategoryMapper;
 import org.example.product_management.entity.Category;
 import org.example.product_management.repository.category.CategoryRepository;
 import org.example.product_management.repository.product.ProductRepository;
-import org.example.product_management.service.category.CategoryService;
+import org.example.product_management.service.interfaces.CategoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
