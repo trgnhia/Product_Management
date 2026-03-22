@@ -13,10 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -35,13 +33,14 @@ public class CategoryController {
     public ResponseEntity<ApiResponse<List<CategoryResponseDTO>>> getAllCategories() {
         List<CategoryResponseDTO> categories = categoryService.getAllCategories();
         return ResponseEntity.ok(
-                ApiResponse.<List<CategoryResponseDTO>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message(SuccessMessages.CATEGORY_RETRIEVED)
-                        .data(categories)
-                        .build()
+                ApiResponse.success(
+                        HttpStatus.OK.value(),
+                        categories,
+                        SuccessMessages.CATEGORY_RETRIEVED
+                )
         );
     }
+
     @Operation(
             summary = "Create category",
             description = "Create a new category"
@@ -51,12 +50,13 @@ public class CategoryController {
     public ResponseEntity<ApiResponse<CategoryResponseDTO>> create(@Valid @RequestBody CategoryRequestDTO categoryRequest) {
         CategoryResponseDTO response = categoryService.create(categoryRequest);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ApiResponse.<CategoryResponseDTO>builder()
-                        .status(HttpStatus.CREATED.value())
-                        .message(SuccessMessages.CATEGORY_CREATED)
-                        .data(response)
-                        .build());
+                .body(ApiResponse.success(
+                        HttpStatus.CREATED.value(),
+                        response,
+                        SuccessMessages.CATEGORY_CREATED
+                ));
     }
+
     @Operation(
             summary = "Get category by id",
             description = "Retrieve category information by its id"
@@ -66,11 +66,11 @@ public class CategoryController {
     public ResponseEntity<ApiResponse<CategoryResponseDTO>> getCategoryById(@PathVariable Long id) {
         CategoryResponseDTO category = categoryService.getCategoryById(id);
         return ResponseEntity.ok(
-                ApiResponse.<CategoryResponseDTO>builder()
-                        .status(HttpStatus.OK.value())
-                        .message(SuccessMessages.CATEGORY_RETRIEVED)
-                        .data(category)
-                        .build()
+                ApiResponse.success(
+                        HttpStatus.OK.value(),
+                        category,
+                        SuccessMessages.CATEGORY_RETRIEVED
+                )
         );
     }
 
@@ -86,11 +86,11 @@ public class CategoryController {
     ) {
         CategoryResponseDTO response = categoryService.update(request, id);
         return ResponseEntity.ok(
-                ApiResponse.<CategoryResponseDTO>builder()
-                        .status(HttpStatus.OK.value())
-                        .message(SuccessMessages.CATEGORY_UPDATED)
-                        .data(response)
-                        .build()
+                ApiResponse.success(
+                        HttpStatus.OK.value(),
+                        response,
+                        SuccessMessages.CATEGORY_UPDATED
+                )
         );
     }
 
@@ -103,10 +103,10 @@ public class CategoryController {
     public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         categoryService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                .body(ApiResponse.<Void>builder()
-                        .status(HttpStatus.NO_CONTENT.value())
-                        .message(SuccessMessages.CATEGORY_DELETED)
-                        .data(null)
-                        .build());
+                .body(ApiResponse.success(
+                        HttpStatus.NO_CONTENT.value(),
+                        null,
+                        SuccessMessages.CATEGORY_DELETED
+                ));
     }
 }

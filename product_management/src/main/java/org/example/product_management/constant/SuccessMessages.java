@@ -10,6 +10,8 @@ public final class SuccessMessages {
     public static final String CATEGORY_UPDATED = "Category updated successfully";
     public static final String CATEGORY_DELETED = "Category deleted successfully";
     public static final String CATEGORY_RETRIEVED = "Category retrieved successfully";
+    public static final String USER_REGISTERED = "User registered successfully";
+    public static final String LOGIN_SUCCESSFUL = "Login successful";
 
     private SuccessMessages() {}
 }

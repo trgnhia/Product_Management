@@ -2,6 +2,7 @@ package org.example.product_management.controller.auth;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.product_management.constant.SuccessMessages;
 import org.example.product_management.dto.ApiResponse;
 import org.example.product_management.dto.auth.request.RegisterRequest;
 import org.example.product_management.dto.auth.response.AuthResponse;
@@ -22,22 +23,22 @@ public class AuthController {
     public ResponseEntity<ApiResponse<Void>> register(@Valid @RequestBody RegisterRequest request) {
         authService.register(request);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ApiResponse.<Void>builder()
-                        .status(HttpStatus.CREATED.value())
-                        .message("User registered successfully")
-                        .data(null)
-                        .build());
+                .body(ApiResponse.success(
+                        HttpStatus.CREATED.value(),
+                        null,
+                        SuccessMessages.USER_REGISTERED
+                ));
     }
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<AuthResponse>> login(@Valid @RequestBody LoginRequest request) {
         AuthResponse response = authService.login(request);
         return ResponseEntity.ok(
-                ApiResponse.<AuthResponse>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("Login successful")
-                        .data(response)
-                        .build()
+                ApiResponse.success(
+                        HttpStatus.OK.value(),
+                        response,
+                        SuccessMessages.LOGIN_SUCCESSFUL
+                )
         );
     }
 }
