@@ -1,4 +1,4 @@
-package org.example.product_management.controller.product;
+package org.example.product_management.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -94,6 +94,6 @@ public class ProductController {
             @RequestParam(defaultValue = "asc") String direction
     ) {
         PageResponse<ProductResponseDTO> response = service.getSortingProducts(page, size, sortBy, direction);
-            return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK.value(), response, SuccessMessages.PRODUCT_RETRIEVED));
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK.value(), response, SuccessMessages.PRODUCT_RETRIEVED));
     }
 }

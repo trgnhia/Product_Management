@@ -1,4 +1,4 @@
-package org.example.product_management.controller.auth;
+package org.example.product_management.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

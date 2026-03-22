@@ -1,4 +1,5 @@
-package org.example.product_management.controller.category;
+package org.example.product_management.controller;
+
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

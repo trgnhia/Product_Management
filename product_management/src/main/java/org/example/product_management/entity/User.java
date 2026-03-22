@@ -8,7 +8,7 @@ import org.example.product_management.enums.Role;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Data
@@ -16,15 +16,19 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private BigDecimal id;
+
     private String username;
     private String email;
     private String password;
+
     @Enumerated(EnumType.STRING)
     private Role role;
-    @Column(name = "created_at")
+
+    @Column(name = "created_at", updatable = false)
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 }
