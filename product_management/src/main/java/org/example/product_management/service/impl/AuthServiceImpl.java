@@ -2,9 +2,9 @@ package org.example.product_management.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.example.product_management.constant.ErrorMessages;
-import org.example.product_management.dto.auth.request.RegisterRequest;
-import org.example.product_management.dto.auth.response.AuthResponse;
-import org.example.product_management.dto.auth.request.LoginRequest;
+import org.example.product_management.dto.request.RegisterRequest;
+import org.example.product_management.dto.response.AuthResponse;
+import org.example.product_management.dto.request.LoginRequest;
 import org.example.product_management.enums.Role;
 import org.example.product_management.exception.InvalidCredentialsException;
 import org.example.product_management.exception.ResourceConflictException;

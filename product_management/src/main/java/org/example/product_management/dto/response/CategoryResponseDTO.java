@@ -1,11 +1,10 @@
-package org.example.product_management.dto.category.response;
+package org.example.product_management.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Data

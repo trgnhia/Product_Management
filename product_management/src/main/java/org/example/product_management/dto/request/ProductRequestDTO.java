@@ -1,4 +1,4 @@
-package org.example.product_management.dto.product.request;
+package org.example.product_management.dto.request;
 
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;

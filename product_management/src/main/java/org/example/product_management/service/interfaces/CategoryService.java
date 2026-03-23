@@ -1,7 +1,7 @@
 package org.example.product_management.service.interfaces;
 
-import org.example.product_management.dto.category.request.CategoryRequestDTO;
-import org.example.product_management.dto.category.response.CategoryResponseDTO;
+import org.example.product_management.dto.request.CategoryRequestDTO;
+import org.example.product_management.dto.response.CategoryResponseDTO;
 
 import java.util.List;
 

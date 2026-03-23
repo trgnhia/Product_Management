@@ -1,4 +1,4 @@
-package org.example.product_management.dto.auth.response;
+package org.example.product_management.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
